@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/products', [ProductsController::class, 'index']);
 Route::post('/products', [ProductsController::class, 'store']);
+
+Route::get('/images/{id}',[ImagesController::class,'getImage']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
