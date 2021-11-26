@@ -23,6 +23,29 @@ class ProductsController extends Controller
                 continue;
             }
             unset($value['owner']);
+            unset($value['category']);
+            unset($value['contact']);
+            unset($value['amount']);
+            $price = 0;
+            if (time() >= strtotime($value['timestamp-3']))
+                $price = $value['price-4'];
+            elseif (time() >= strtotime($value['timestamp-2']))
+                $price = $value['price-3'];
+            elseif (time() >= strtotime($value['timestamp-1']))
+                $price = $value['price-2'];
+            else
+                $price = $value['price-1'];
+            $value['price'] = $price;
+            unset($value['price-1']);
+            unset($value['price-2']);
+            unset($value['price-3']);
+            unset($value['price-4']);
+            unset($value['timestamp-1']);
+            unset($value['timestamp-2']);
+            unset($value['timestamp-3']);
+            unset($value['timestamp-4']);
+            unset($value['created_at']);
+            unset($value['updated_at']);
         }
         return $products;
     }
@@ -56,7 +79,9 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //TODO send brief data only with index, and the rest with show
+        $product = Products::find($id);
+        unset($product['owner']);
+        return $product;
     }
 
     /**
@@ -75,6 +100,7 @@ class ProductsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param boolean $isServer
      * @return \Illuminate\Http\Response
      */
     public function destroy($id, $isServer = false)
