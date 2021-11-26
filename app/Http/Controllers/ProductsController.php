@@ -14,7 +14,11 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return Products::all();
+        $products = Products::all();
+        foreach ($products as $key => $value) {
+            unset($value['owner']);
+        }
+        return $products;
     }
 
     /**
@@ -31,9 +35,10 @@ class ProductsController extends Controller
         ]);
         $imageName = time() . '.' . $request->image->extension();
         $request->image->storeAs('images', $imageName);
-        $entry=$request->all();
+        $entry = $request->all();
         unset($entry['image']);
-        $entry['imgName']=$imageName;
+        $entry['imgName'] = $imageName;
+        $entry['owner'] = 'admin@admin'; //TODO obtain from user
         return Products::create($entry);
     }
 
