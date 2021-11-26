@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/products', [ProductsController::class, 'index']);
 Route::post('/products', [ProductsController::class, 'store']);
+Route::delete('/products/{id}', [ProductsController::class, 'destroy']);
 
-Route::get('/images/{id}',[ImagesController::class,'getImage']);
+Route::get('/images/{id}', [ImagesController::class, 'getImage']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

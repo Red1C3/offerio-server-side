@@ -16,6 +16,12 @@ class ProductsController extends Controller
     {
         $products = Products::all();
         foreach ($products as $key => $value) {
+            $expirationDate = strtotime($value['timestamp-4']);
+            if (time() >= $expirationDate) {
+                $this->destroy($value['id'], true);
+                unset($products[$key]);
+                continue;
+            }
             unset($value['owner']);
         }
         return $products;
@@ -32,7 +38,7 @@ class ProductsController extends Controller
     {
         $request->validate([
             'image' => 'required|image|mimes:png,jpg,jpeg' //TODO validate all fields
-        ]);
+        ]);                                                //TODO validate timestamps and prices values
         $imageName = time() . '.' . $request->image->extension();
         $request->image->storeAs('images', $imageName);
         $entry = $request->all();
@@ -50,7 +56,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        //TODO send brief data only with index, and the rest with show
     }
 
     /**
@@ -71,8 +77,12 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $isServer = false)
     {
-        //
+        if ($isServer == false) {
+            //TODO check if user is authorized to delete this product
+            return response('Forbidden', 403);
+        }
+        return Products::destroy($id);
     }
 }
