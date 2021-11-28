@@ -60,11 +60,36 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:png,jpg,jpeg' //TODO validate all fields
-        ]);                                                //TODO validate timestamps and prices values
+            'image' => 'required|image|mimes:png,jpg,jpeg',
+            'name' => 'required',
+            'category' => 'required',
+            'contact' => 'required',
+            'amount' => 'required',
+            'timestamp-1' => 'required',
+            'timestamp-2' => 'required',
+            'timestamp-3' => 'required',
+            'timestamp-4' => 'required',
+            'price-1' => 'required',
+            'price-2' => 'required',
+            'price-3' => 'required',
+            'price-4' => 'required',
+        ]);
+        $entry = $request->all();
+        if (
+            $entry['price-1'] <= $entry['price-2'] ||
+            $entry['price-2'] <= $entry['price-3'] ||
+            $entry['price-3'] <= $entry['price-4']
+        )
+            return response('Invalid prices', 400);
+        $timestamps[0] = strtotime($entry['timestamp-1']);
+        $timestamps[1] = strtotime($entry['timestamp-2']);
+        $timestamps[2] = strtotime($entry['timestamp-3']);
+        $timestamps[3] = strtotime($entry['timestamp-4']);
+        for ($i = 0; $i < 3; $i++)
+            if ($timestamps[$i + 1] <= $timestamps[$i])
+                return response('Invalid timestamps', 400);
         $imageName = time() . '.' . $request->image->extension();
         $request->image->storeAs('images', $imageName);
-        $entry = $request->all();
         unset($entry['image']);
         $entry['imgName'] = $imageName;
         $entry['owner'] = 'admin@admin'; //TODO obtain from user
@@ -109,6 +134,8 @@ class ProductsController extends Controller
             //TODO check if user is authorized to delete this product
             return response('Forbidden', 403);
         }
+        $imgPath = storage_path() . '/app/images/' . Products::find($id)['imgName'];
+        unlink($imgPath);
         return Products::destroy($id);
     }
 }
