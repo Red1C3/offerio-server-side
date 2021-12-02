@@ -133,7 +133,11 @@ class ProductsController extends Controller
             return response('Invalid searching field', 400);
         $items = Products::where($field, 'like', '%' . $searchedItem . '%')->get();
         if (count($items) == 0)
-            return response('No item was found');
+            return response()->json([
+                'msg' => 'No item was found',
+                'num' => 0,
+                'items' => null
+            ]);
         foreach ($items as $key => $value) {
             $this->stripItemDeep($value);
         }
