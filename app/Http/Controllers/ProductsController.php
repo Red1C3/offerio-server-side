@@ -22,30 +22,7 @@ class ProductsController extends Controller
                 unset($products[$key]);
                 continue;
             }
-            unset($value['owner']);
-            unset($value['category']);
-            unset($value['contact']);
-            unset($value['amount']);
-            $price = 0;
-            if (time() >= strtotime($value['timestamp-3']))
-                $price = $value['price-4'];
-            elseif (time() >= strtotime($value['timestamp-2']))
-                $price = $value['price-3'];
-            elseif (time() >= strtotime($value['timestamp-1']))
-                $price = $value['price-2'];
-            else
-                $price = $value['price-1'];
-            $value['price'] = $price;
-            unset($value['price-1']);
-            unset($value['price-2']);
-            unset($value['price-3']);
-            unset($value['price-4']);
-            unset($value['timestamp-1']);
-            unset($value['timestamp-2']);
-            unset($value['timestamp-3']);
-            unset($value['timestamp-4']);
-            unset($value['created_at']);
-            unset($value['updated_at']);
+            $this->stripItemDeep($value);
         }
         return $products;
     }
@@ -137,5 +114,65 @@ class ProductsController extends Controller
         $imgPath = storage_path() . '/app/images/' . Products::find($id)['imgName'];
         unlink($imgPath);
         return Products::destroy($id);
+    }
+    /**
+     * Search for a product satisfying partially, the name, category or expiration date
+     * 
+     * @param Request $request
+     * @return Response
+     */
+    public function search(Request $request)
+    {
+        $field = $request->input('searchBy');
+        $searchedItem = $request->input('keyword');
+        if (!$searchedItem || !$field)
+            return response('Missing fields', 400);
+        if (!($field == 'name' ||
+            $field == 'category' ||
+            $field == 'timestamp-4'))
+            return response('Invalid searching field', 400);
+        $items = Products::where($field, 'like', '%' . $searchedItem . '%')->get();
+        if (count($items) == 0)
+            return response('No item was found');
+        foreach ($items as $key => $value) {
+            $this->stripItemDeep($value);
+        }
+        return response()->json([
+            'msg' => 'Items were found',
+            'num' => count($items),
+            'items' => $items
+        ]);
+    }
+    /**
+     * Remove details fields from a product
+     * 
+     * @param mixed $item should be a product
+     */
+    private function stripItemDeep(mixed $item)
+    {
+        unset($item['owner']);
+        unset($item['category']);
+        unset($item['contact']);
+        unset($item['amount']);
+        $price = 0;
+        if (time() >= strtotime($item['timestamp-3']))
+            $price = $item['price-4'];
+        elseif (time() >= strtotime($item['timestamp-2']))
+            $price = $item['price-3'];
+        elseif (time() >= strtotime($item['timestamp-1']))
+            $price = $item['price-2'];
+        else
+            $price = $item['price-1'];
+        $item['price'] = $price;
+        unset($item['price-1']);
+        unset($item['price-2']);
+        unset($item['price-3']);
+        unset($item['price-4']);
+        unset($item['timestamp-1']);
+        unset($item['timestamp-2']);
+        unset($item['timestamp-3']);
+        unset($item['timestamp-4']);
+        unset($item['created_at']);
+        unset($item['updated_at']);
     }
 }
