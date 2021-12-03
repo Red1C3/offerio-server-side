@@ -81,9 +81,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        $product = Products::find($id);
-        unset($product['owner']);
-        return $product;
+        return Products::find($id);
     }
 
     /**
@@ -154,7 +152,6 @@ class ProductsController extends Controller
      */
     private function stripItemDeep(mixed $item)
     {
-        unset($item['owner']);
         unset($item['category']);
         unset($item['contact']);
         unset($item['amount']);
@@ -176,7 +173,5 @@ class ProductsController extends Controller
         unset($item['timestamp-2']);
         unset($item['timestamp-3']);
         unset($item['timestamp-4']);
-        unset($item['created_at']);
-        unset($item['updated_at']);
     }
 }

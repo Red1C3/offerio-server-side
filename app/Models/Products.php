@@ -24,4 +24,9 @@ class Products extends Model
         'price-3',
         'price-4',
     ];
+    protected $hidden = [
+        'owner',
+        'created_at',
+        'updated_at'
+    ];
 }
