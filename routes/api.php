@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\UsersController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,13 +18,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::post('/signup', [UsersController::class, 'signup']);
+Route::post('/login',[UsersController::class,'login']);
 Route::get('/products', [ProductsController::class, 'index']);
-Route::post('/products', [ProductsController::class, 'store']);
 Route::get('/products/{id}', [ProductsController::class, 'show']);
-Route::delete('/products/{id}', [ProductsController::class, 'destroy']);
 Route::post('/search', [ProductsController::class, 'search']);
 
 Route::get('/images/{id}', [ImagesController::class, 'getImage']);
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('/products', [ProductsController::class, 'store']);
+    Route::delete('/products/{id}', [ProductsController::class, 'destroy']);
+    Route::post('/logout', [UsersController::class, 'logout']);
+});
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
