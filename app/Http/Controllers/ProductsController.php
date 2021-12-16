@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -18,7 +19,7 @@ class ProductsController extends Controller
         foreach ($products as $key => $value) {
             $expirationDate = strtotime($value['timestamp-4']);
             if (time() >= $expirationDate) {
-                $this->destroy($value['id'], true);
+                $this->serverDestroy($value['id'], true);
                 unset($products[$key]);
                 continue;
             }
@@ -69,7 +70,7 @@ class ProductsController extends Controller
         $request->image->storeAs('images', $imageName);
         unset($entry['image']);
         $entry['imgName'] = $imageName;
-        $entry['owner'] = 'admin@admin'; //TODO obtain from user
+        $entry['user_id'] = $request->user()['id'];
         return Products::create($entry);
     }
 
@@ -81,7 +82,14 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        return Products::find($id);
+        $user = auth('sanctum')->user();
+        $product = Products::find($id);
+        if ($user != null && $product['user_id'] == $user['id']) {
+            $product['isOwner'] = true;
+        } else {
+            $product['isOwner'] = false;
+        }
+        return response()->json($product, 200);
     }
 
     /**
@@ -103,12 +111,17 @@ class ProductsController extends Controller
      * @param boolean $isServer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $isServer = false)
+    public function destroy($id, Request $request)
     {
-        if ($isServer == false) {
-            //TODO check if user is authorized to delete this product
-            return response('Forbidden', 403);
+        if (Products::find($id)['user_id'] != $request->user()['id']) {
+            return response('Unauthorized', 403);
         }
+        $imgPath = storage_path() . '/app/images/' . Products::find($id)['imgName'];
+        unlink($imgPath);
+        return Products::destroy($id);
+    }
+    public function serverDestroy($id)
+    {
         $imgPath = storage_path() . '/app/images/' . Products::find($id)['imgName'];
         unlink($imgPath);
         return Products::destroy($id);
