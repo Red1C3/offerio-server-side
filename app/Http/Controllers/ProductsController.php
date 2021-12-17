@@ -162,12 +162,16 @@ class ProductsController extends Controller
                 'msg' => 'Missing fields'
             ], 400);
         if (!($field == 'name' ||
-            $field == 'category' ||
+            $field == 'category_id' ||
             $field == 'timestamp-4'))
             return response()->json([
                 'msg' => 'Invalid searching field'
-            ], 400); //TODO if category get from forign id
-        $items = Products::where($field, 'like', '%' . $searchedItem . '%')->get();
+            ], 400);
+        if ($field != 'category_id')
+            $items = Products::where($field, 'like', '%' . $searchedItem . '%')->get();
+        else {
+            $items = Category::find($searchedItem)->products;
+        }
         if (count($items) == 0)
             return response()->json([
                 'msg' => 'No item was found',
