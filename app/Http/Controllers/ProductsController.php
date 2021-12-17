@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Products;
 use App\Models\User;
 use App\Providers\AppServiceProvider;
@@ -41,7 +42,8 @@ class ProductsController extends Controller
         $request->validate([
             'image' => 'required|image|mimes:png,jpg,jpeg',
             'name' => 'required',
-            'category' => 'required',
+            'description' => 'required',
+            'category_id' => 'required|int',
             'contact' => 'required',
             'amount' => 'required',
             'timestamp-1' => 'required',
@@ -54,6 +56,9 @@ class ProductsController extends Controller
             'price-4' => 'required',
         ]);
         $entry = $request->all();
+        if (!Category::find($entry['category_id'])) {
+            return response('Category does not exist', 400);
+        }
         if (
             $entry['price-1'] <= $entry['price-2'] ||
             $entry['price-2'] <= $entry['price-3'] ||
@@ -94,7 +99,7 @@ class ProductsController extends Controller
         } else {
             $product['isOwner'] = false;
         }
-        return response()->json($product, 200);
+        return response()->json($product, 200); //TODO uniform responses
     }
 
     /**
@@ -149,7 +154,7 @@ class ProductsController extends Controller
         if (!($field == 'name' ||
             $field == 'category' ||
             $field == 'timestamp-4'))
-            return response('Invalid searching field', 400);
+            return response('Invalid searching field', 400); //TODO if category get from forign id
         $items = Products::where($field, 'like', '%' . $searchedItem . '%')->get();
         if (count($items) == 0)
             return response()->json([
