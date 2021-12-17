@@ -57,21 +57,27 @@ class ProductsController extends Controller
         ]);
         $entry = $request->all();
         if (!Category::find($entry['category_id'])) {
-            return response('Category does not exist', 400);
+            return response()->json([
+                'msg' => 'Category does not exist'
+            ], 400);
         }
         if (
             $entry['price-1'] <= $entry['price-2'] ||
             $entry['price-2'] <= $entry['price-3'] ||
             $entry['price-3'] <= $entry['price-4']
         )
-            return response('Invalid prices', 400);
+            return response()->json([
+                'msg' => 'Invalid prices'
+            ], 400);
         $timestamps[0] = strtotime($entry['timestamp-1']);
         $timestamps[1] = strtotime($entry['timestamp-2']);
         $timestamps[2] = strtotime($entry['timestamp-3']);
         $timestamps[3] = strtotime($entry['timestamp-4']);
         for ($i = 0; $i < 3; $i++)
             if ($timestamps[$i + 1] <= $timestamps[$i])
-                return response('Invalid timestamps', 400);
+                return response()->json([
+                    'msg' => 'Invalid timestamps'
+                ], 400);
         $imageName = time() . '.' . $request->image->extension();
         $request->image->storeAs('images', $imageName);
         unset($entry['image']);
@@ -99,7 +105,7 @@ class ProductsController extends Controller
         } else {
             $product['isOwner'] = false;
         }
-        return response()->json($product, 200); //TODO uniform responses
+        return response()->json($product, 200);
     }
 
     /**
@@ -127,7 +133,9 @@ class ProductsController extends Controller
             Products::find($id)['user_id'] != $request->user()['id'] &&
             $request->user()['name'] != 'admin'
         ) {
-            return response('Unauthorized', 403);
+            return response()->json([
+                'msg' => 'Unauthorized'
+            ], 403);
         }
         $imgPath = storage_path() . '/app/images/' . Products::find($id)['imgName'];
         unlink($imgPath);
@@ -150,11 +158,15 @@ class ProductsController extends Controller
         $field = $request->input('searchBy');
         $searchedItem = $request->input('keyword');
         if (!$searchedItem || !$field)
-            return response('Missing fields', 400);
+            return response()->json([
+                'msg' => 'Missing fields'
+            ], 400);
         if (!($field == 'name' ||
             $field == 'category' ||
             $field == 'timestamp-4'))
-            return response('Invalid searching field', 400); //TODO if category get from forign id
+            return response()->json([
+                'msg' => 'Invalid searching field'
+            ], 400); //TODO if category get from forign id
         $items = Products::where($field, 'like', '%' . $searchedItem . '%')->get();
         if (count($items) == 0)
             return response()->json([

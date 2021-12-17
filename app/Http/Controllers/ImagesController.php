@@ -20,6 +20,8 @@ class ImagesController extends Controller
         if (file_exists(storage_path() . '/app/images/' . $id))
             return response()->file(storage_path() . '/app/images/' . $id);
         else
-            return response('Not Found', 404);
+            return response()->json([
+                'msg' => 'Not found'
+            ], 404);
     }
 }

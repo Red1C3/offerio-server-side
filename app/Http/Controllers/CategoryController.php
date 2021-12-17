@@ -14,7 +14,9 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         if ($request->user()['name'] != 'admin') {
-            return response('unauthorized', 403);
+            return response()->json([
+                'msg' => 'Unauthorized'
+            ], 403);
         }
         $request->validate([
             'name' => 'required'
@@ -25,7 +27,9 @@ class CategoryController extends Controller
     public function destroy($id, Request $request)
     {
         if ($request->user()['name'] != 'admin') {
-            return response('Unauthorized', 403);
+            return response()->json([
+                'Unauthorized'
+            ], 403);
         }
         return Category::destroy($id);
     }
