@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name', 128);
             $table->string('description');
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('category_id')->references('id')->on('categories');
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
             $table->string('contact', 128);
             $table->string('imgName', 128);
             $table->integer('amount');

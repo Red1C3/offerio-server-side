@@ -22,4 +22,11 @@ class CategoryController extends Controller
         $entry = $request->all();
         return Category::create($entry);
     }
+    public function destroy($id, Request $request)
+    {
+        if ($request->user()['name'] != 'admin') {
+            return response('Unauthorized', 403);
+        }
+        return Category::destroy($id);
+    }
 }
