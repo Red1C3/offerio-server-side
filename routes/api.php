@@ -5,6 +5,7 @@ use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UsersController;
 use App\Models\Category;
+use App\Models\Products;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::get('/images/{id}', [ImagesController::class, 'getImage']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/products', [ProductsController::class, 'store']);
     Route::post('/category', [CategoryController::class, 'store']);
+    Route::patch('/products/{id}', [ProductsController::class, 'update']);
     Route::delete('/products/{id}', [ProductsController::class, 'destroy']);
     Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
     Route::post('/logout', [UsersController::class, 'logout']);

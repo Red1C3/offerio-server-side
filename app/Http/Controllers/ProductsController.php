@@ -45,15 +45,15 @@ class ProductsController extends Controller
             'description' => 'required',
             'category_id' => 'required|int',
             'contact' => 'required',
-            'amount' => 'required',
+            'amount' => 'required|int|min:0',
             'timestamp-1' => 'required',
             'timestamp-2' => 'required',
             'timestamp-3' => 'required',
             'timestamp-4' => 'required',
-            'price-1' => 'required',
-            'price-2' => 'required',
-            'price-3' => 'required',
-            'price-4' => 'required',
+            'price-1' => 'required|numeric|min:0',
+            'price-2' => 'required|numeric|min:0',
+            'price-3' => 'required|numeric|min:0',
+            'price-4' => 'required|numeric|min:0',
         ]);
         $entry = $request->all();
         if (!Category::find($entry['category_id'])) {
@@ -117,7 +117,32 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Products::find($id);
+        if (!$product) {
+            return response()->json([
+                'msg' => 'Not found'
+            ], 404);
+        }
+        if (
+            $product['user_id'] != $request->user()['id'] &&
+            $request->user()['name'] != 'admin'
+        ) {
+            return response()->json([
+                'msg' => 'Unauthorized'
+            ], 403);
+        }
+        if (
+            $request->input('timestamp-1') ||
+            $request->input('timestamp-2') ||
+            $request->input('timestamp-3') ||
+            $request->input('timestamp-4')
+        )
+            return response()->json([
+                'msg' => 'Unauthorized'
+            ], 403);
+        $product->update($request->all());
+        $product->save();
+        return response($product, 200);
     }
 
     /**
@@ -129,15 +154,21 @@ class ProductsController extends Controller
      */
     public function destroy($id, Request $request)
     {
+        $product = Products::find($id);
+        if (!$product) {
+            return response()->json([
+                'msg' => 'Not found'
+            ], 404);
+        }
         if (
-            Products::find($id)['user_id'] != $request->user()['id'] &&
+            $product['user_id'] != $request->user()['id'] &&
             $request->user()['name'] != 'admin'
         ) {
             return response()->json([
                 'msg' => 'Unauthorized'
             ], 403);
         }
-        $imgPath = storage_path() . '/app/images/' . Products::find($id)['imgName'];
+        $imgPath = storage_path() . '/app/images/' . $product['imgName'];
         unlink($imgPath);
         return Products::destroy($id);
     }
