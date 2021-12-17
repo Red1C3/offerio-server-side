@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Products;
 use App\Models\User;
+use App\Providers\AppServiceProvider;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -84,7 +85,11 @@ class ProductsController extends Controller
     {
         $user = auth('sanctum')->user();
         $product = Products::find($id);
-        if ($user != null && $product['user_id'] == $user['id']) {
+        if (
+            $user != null
+            && ($product['user_id'] == $user['id']
+                || $user['name'] == 'admin')
+        ) {
             $product['isOwner'] = true;
         } else {
             $product['isOwner'] = false;
@@ -113,7 +118,10 @@ class ProductsController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        if (Products::find($id)['user_id'] != $request->user()['id']) {
+        if (
+            Products::find($id)['user_id'] != $request->user()['id'] &&
+            $request->user()['name'] != 'admin'
+        ) {
             return response('Unauthorized', 403);
         }
         $imgPath = storage_path() . '/app/images/' . Products::find($id)['imgName'];
