@@ -25,6 +25,7 @@ class ProductsController extends Controller
                 unset($products[$key]);
                 continue;
             }
+            $value['likesCount'] = count($value->likes);
             $this->stripItemDeep($value);
         }
         return $products;
@@ -113,6 +114,16 @@ class ProductsController extends Controller
         } else {
             $product['isOwner'] = false;
         }
+        $likes = $product->likes;
+        $product['isLiked'] = false;
+        for ($i = 0; $i < count($likes); $i++) {
+            if ($user && $likes[$i]['user_id'] == $user['id']) {
+                $product['isLiked'] = true;
+                break;
+            }
+        }
+        unset($product['likes']);
+        $product['likesCount'] = count($likes);
         return response()->json($product, 200);
     }
 
@@ -255,5 +266,6 @@ class ProductsController extends Controller
         unset($item['timestamp-3']);
         unset($item['timestamp-4']);
         unset($item['views']);
+        unset($item['likes']);
     }
 }

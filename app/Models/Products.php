@@ -30,4 +30,8 @@ class Products extends Model
         'created_at',
         'updated_at'
     ];
+    public function likes()
+    {
+        return $this->hasMany(Likes::class);
+    }
 }

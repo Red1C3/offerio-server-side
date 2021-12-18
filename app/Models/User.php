@@ -41,7 +41,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function products()
+    public function products() //TODO my products route
     {
         return $this->hasMany(Products::class);
     }
