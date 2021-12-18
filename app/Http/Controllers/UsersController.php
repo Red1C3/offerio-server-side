@@ -72,4 +72,11 @@ class UsersController extends Controller
             200
         );
     }
+    public function profile()
+    {
+        $user = auth()->user();
+        $user['products'] = $user->products;
+        $user['comments'] = $user->comments;
+        return $user;
+    }
 }
