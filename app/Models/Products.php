@@ -34,4 +34,8 @@ class Products extends Model
     {
         return $this->hasMany(Likes::class);
     }
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
+    }
 }

@@ -124,6 +124,7 @@ class ProductsController extends Controller
         }
         unset($product['likes']);
         $product['likesCount'] = count($likes);
+        $product['comments'] = $product->comments;
         return response()->json($product, 200);
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\ProductsController;
@@ -33,9 +34,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/products', [ProductsController::class, 'store']);
     Route::post('/category', [CategoryController::class, 'store']);
     Route::post('/like', [LikesController::class, 'store']);
+    Route::post('/comment', [CommentController::class, 'store']);
     Route::patch('/products/{id}', [ProductsController::class, 'update']);
     Route::delete('/products/{id}', [ProductsController::class, 'destroy']);
     Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
+    Route::delete('/comment/{id}', [CommentController::class, 'destroy']);
     Route::delete('/like/{id}', [LikesController::class, 'destroy']);
     Route::post('/logout', [UsersController::class, 'logout']);
 });

@@ -13,6 +13,11 @@ class LikesController extends Controller
         $like = $request->validate([
             'products_id' => 'required|int'
         ]);
+        if (!Products::find($like['products_id'])) {
+            return response()->json([
+                'msg' => 'Not found'
+            ], 404);
+        }
         $like['user_id'] = auth()->user()['id'];
         return Likes::firstOrCreate($like);
     }
