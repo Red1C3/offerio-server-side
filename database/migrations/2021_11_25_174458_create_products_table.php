@@ -32,6 +32,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price-2', 10, 4);
             $table->decimal('price-3', 10, 4);
             $table->decimal('price-4', 10, 4);
+            $table->integer('views');
             $table->timestamps();
         });
     }

@@ -83,6 +83,7 @@ class ProductsController extends Controller
         unset($entry['image']);
         $entry['imgName'] = $imageName;
         $entry['user_id'] = $request->user()['id'];
+        $entry['views'] = 0;
         return Products::create($entry);
     }
 
@@ -96,6 +97,13 @@ class ProductsController extends Controller
     {
         $user = auth('sanctum')->user();
         $product = Products::find($id);
+        if (!$product) {
+            return response()->json([
+                'msg' => 'Not found'
+            ], 404);
+        }
+        $product['views'] = $product['views'] + 1;
+        $product->save();
         if (
             $user != null
             && ($product['user_id'] == $user['id']
@@ -246,5 +254,6 @@ class ProductsController extends Controller
         unset($item['timestamp-2']);
         unset($item['timestamp-3']);
         unset($item['timestamp-4']);
+        unset($item['views']);
     }
 }

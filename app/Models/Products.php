@@ -24,6 +24,7 @@ class Products extends Model
         'price-2',
         'price-3',
         'price-4',
+        'views'
     ];
     protected $hidden = [
         'created_at',
