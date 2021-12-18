@@ -4,6 +4,8 @@ To get the server up for the first time do the following :
 - run ``composer install`` inside the cloned folder.
 - ask me for env file.
 - create an empty database file, ``database.sqlite`` at /database.
+- run ``php artisan migrate:fresh``
+- run ``php artisan db:seed``
 
 After these steps you should be able to get the latest repo updates by pulling changes with git.
 
