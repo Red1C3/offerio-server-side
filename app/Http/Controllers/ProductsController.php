@@ -19,12 +19,6 @@ class ProductsController extends Controller
     {
         $products = Products::all();
         foreach ($products as $key => $value) {
-            $expirationDate = strtotime($value['timestamp-4']);
-            if (time() >= $expirationDate) {
-                $this->serverDestroy($value['id'], true);
-                unset($products[$key]);
-                continue;
-            }
             $value['likesCount'] = count($value->likes);
             $this->stripItemDeep($value);
         }
@@ -189,12 +183,6 @@ class ProductsController extends Controller
             ], 403);
         }
         $imgPath = storage_path() . '/app/images/' . $product['imgName'];
-        unlink($imgPath);
-        return Products::destroy($id);
-    }
-    public function serverDestroy($id)
-    {
-        $imgPath = storage_path() . '/app/images/' . Products::find($id)['imgName'];
         unlink($imgPath);
         return Products::destroy($id);
     }
