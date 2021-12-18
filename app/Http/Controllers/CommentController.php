@@ -19,7 +19,8 @@ class CommentController extends Controller
                 'msg' => 'Not found'
             ], 404);
         }
-        $comment['user_id'] = auth()->user()['id']; //TODO store commenter name too
+        $comment['user_id'] = auth()->user()['id'];
+        $comment['commenter'] = auth()->user()['name'];
         return Comments::firstOrCreate($comment);
     }
     public function destroy($id)
