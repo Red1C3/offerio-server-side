@@ -1,0 +1,948 @@
+// To parse this JSON data, do
+//
+//     final getProductsSummary = getProductsSummaryFromJson(jsonString);
+
+import 'dart:convert';
+
+List<GetProductsSummary> getProductsSummaryFromJson(String str) => List<GetProductsSummary>.from(json.decode(str).map((x) => GetProductsSummary.fromJson(x)));
+
+String getProductsSummaryToJson(List<GetProductsSummary> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class GetProductsSummary {
+    GetProductsSummary({
+        this.id,
+        this.name,
+        this.description,
+        this.userId,
+        this.categoryId,
+        this.imgName,
+        this.likesCount,
+        this.price,
+    });
+
+    int id;
+    String name;
+    String description;
+    String userId;
+    String categoryId;
+    String imgName;
+    int likesCount;
+    String price;
+
+    factory GetProductsSummary.fromJson(Map<String, dynamic> json) => GetProductsSummary(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        userId: json["user_id"],
+        categoryId: json["category_id"],
+        imgName: json["imgName"],
+        likesCount: json["likesCount"],
+        price: json["price"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "user_id": userId,
+        "category_id": categoryId,
+        "imgName": imgName,
+        "likesCount": likesCount,
+        "price": price,
+    };
+}
+
+
+//
+
+
+// To parse this JSON data, do
+//
+//     final createAProductResponse = createAProductResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+CreateAProductResponse createAProductResponseFromJson(String str) => CreateAProductResponse.fromJson(json.decode(str));
+
+String createAProductResponseToJson(CreateAProductResponse data) => json.encode(data.toJson());
+
+class CreateAProductResponse {
+    CreateAProductResponse({
+        this.name,
+        this.categoryId,
+        this.contact,
+        this.amount,
+        this.timestamp1,
+        this.timestamp2,
+        this.timestamp3,
+        this.timestamp4,
+        this.price1,
+        this.price2,
+        this.price3,
+        this.price4,
+        this.description,
+        this.imgName,
+        this.userId,
+        this.views,
+        this.id,
+    });
+
+    String name;
+    String categoryId;
+    String contact;
+    String amount;
+    String timestamp1;
+    String timestamp2;
+    String timestamp3;
+    String timestamp4;
+    String price1;
+    String price2;
+    String price3;
+    String price4;
+    String description;
+    String imgName;
+    int userId;
+    int views;
+    int id;
+
+    factory CreateAProductResponse.fromJson(Map<String, dynamic> json) => CreateAProductResponse(
+        name: json["name"],
+        categoryId: json["category_id"],
+        contact: json["contact"],
+        amount: json["amount"],
+        timestamp1: json["timestamp-1"],
+        timestamp2: json["timestamp-2"],
+        timestamp3: json["timestamp-3"],
+        timestamp4: json["timestamp-4"],
+        price1: json["price-1"],
+        price2: json["price-2"],
+        price3: json["price-3"],
+        price4: json["price-4"],
+        description: json["description"],
+        imgName: json["imgName"],
+        userId: json["user_id"],
+        views: json["views"],
+        id: json["id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "category_id": categoryId,
+        "contact": contact,
+        "amount": amount,
+        "timestamp-1": timestamp1,
+        "timestamp-2": timestamp2,
+        "timestamp-3": timestamp3,
+        "timestamp-4": timestamp4,
+        "price-1": price1,
+        "price-2": price2,
+        "price-3": price3,
+        "price-4": price4,
+        "description": description,
+        "imgName": imgName,
+        "user_id": userId,
+        "views": views,
+        "id": id,
+    };
+}
+
+
+//
+
+// To parse this JSON data, do
+//
+//     final createAProductResponse = createAProductResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+CreateAProductResponse createAProductResponseFromJson(String str) => CreateAProductResponse.fromJson(json.decode(str));
+
+String createAProductResponseToJson(CreateAProductResponse data) => json.encode(data.toJson());
+
+class CreateAProductResponse {
+    CreateAProductResponse({
+        this.id,
+        this.name,
+        this.description,
+        this.userId,
+        this.categoryId,
+        this.contact,
+        this.imgName,
+        this.amount,
+        this.timestamp1,
+        this.timestamp2,
+        this.timestamp3,
+        this.timestamp4,
+        this.price1,
+        this.price2,
+        this.price3,
+        this.price4,
+        this.views,
+        this.isOwner,
+        this.isLiked,
+        this.likesCount,
+        this.comments,
+    });
+
+    int id;
+    String name;
+    String description;
+    String userId;
+    String categoryId;
+    String contact;
+    String imgName;
+    String amount;
+    String timestamp1;
+    String timestamp2;
+    String timestamp3;
+    String timestamp4;
+    String price1;
+    String price2;
+    String price3;
+    String price4;
+    int views;
+    bool isOwner;
+    bool isLiked;
+    int likesCount;
+    List<dynamic> comments;
+
+    factory CreateAProductResponse.fromJson(Map<String, dynamic> json) => CreateAProductResponse(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        userId: json["user_id"],
+        categoryId: json["category_id"],
+        contact: json["contact"],
+        imgName: json["imgName"],
+        amount: json["amount"],
+        timestamp1: json["timestamp-1"],
+        timestamp2: json["timestamp-2"],
+        timestamp3: json["timestamp-3"],
+        timestamp4: json["timestamp-4"],
+        price1: json["price-1"],
+        price2: json["price-2"],
+        price3: json["price-3"],
+        price4: json["price-4"],
+        views: json["views"],
+        isOwner: json["isOwner"],
+        isLiked: json["isLiked"],
+        likesCount: json["likesCount"],
+        comments: List<dynamic>.from(json["comments"].map((x) => x)),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "user_id": userId,
+        "category_id": categoryId,
+        "contact": contact,
+        "imgName": imgName,
+        "amount": amount,
+        "timestamp-1": timestamp1,
+        "timestamp-2": timestamp2,
+        "timestamp-3": timestamp3,
+        "timestamp-4": timestamp4,
+        "price-1": price1,
+        "price-2": price2,
+        "price-3": price3,
+        "price-4": price4,
+        "views": views,
+        "isOwner": isOwner,
+        "isLiked": isLiked,
+        "likesCount": likesCount,
+        "comments": List<dynamic>.from(comments.map((x) => x)),
+    };
+}
+
+
+//
+
+
+// To parse this JSON data, do
+//
+//     final searchForProducts = searchForProductsFromJson(jsonString);
+
+import 'dart:convert';
+
+SearchForProducts searchForProductsFromJson(String str) => SearchForProducts.fromJson(json.decode(str));
+
+String searchForProductsToJson(SearchForProducts data) => json.encode(data.toJson());
+
+class SearchForProducts {
+    SearchForProducts({
+        this.msg,
+        this.num,
+        this.items,
+    });
+
+    String msg;
+    int num;
+    List<Item> items;
+
+    factory SearchForProducts.fromJson(Map<String, dynamic> json) => SearchForProducts(
+        msg: json["msg"],
+        num: json["num"],
+        items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "msg": msg,
+        "num": num,
+        "items": List<dynamic>.from(items.map((x) => x.toJson())),
+    };
+}
+
+class Item {
+    Item({
+        this.id,
+        this.name,
+        this.description,
+        this.userId,
+        this.categoryId,
+        this.imgName,
+        this.price,
+    });
+
+    int id;
+    String name;
+    String description;
+    String userId;
+    String categoryId;
+    String imgName;
+    String price;
+
+    factory Item.fromJson(Map<String, dynamic> json) => Item(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        userId: json["user_id"],
+        categoryId: json["category_id"],
+        imgName: json["imgName"],
+        price: json["price"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "user_id": userId,
+        "category_id": categoryId,
+        "imgName": imgName,
+        "price": price,
+    };
+}
+
+
+//
+
+// To parse this JSON data, do
+//
+//     final getAProductDetails = getAProductDetailsFromJson(jsonString);
+
+import 'dart:convert';
+
+GetAProductDetails getAProductDetailsFromJson(String str) => GetAProductDetails.fromJson(json.decode(str));
+
+String getAProductDetailsToJson(GetAProductDetails data) => json.encode(data.toJson());
+
+class GetAProductDetails {
+    GetAProductDetails({
+        this.id,
+        this.name,
+        this.description,
+        this.userId,
+        this.categoryId,
+        this.contact,
+        this.imgName,
+        this.amount,
+        this.timestamp1,
+        this.timestamp2,
+        this.timestamp3,
+        this.timestamp4,
+        this.price1,
+        this.price2,
+        this.price3,
+        this.price4,
+        this.views,
+        this.isOwner,
+        this.isLiked,
+        this.likesCount,
+        this.comments,
+    });
+
+    int id;
+    String name;
+    String description;
+    String userId;
+    String categoryId;
+    String contact;
+    String imgName;
+    String amount;
+    String timestamp1;
+    String timestamp2;
+    String timestamp3;
+    String timestamp4;
+    String price1;
+    String price2;
+    String price3;
+    String price4;
+    int views;
+    bool isOwner;
+    bool isLiked;
+    int likesCount;
+    List<dynamic> comments;
+
+    factory GetAProductDetails.fromJson(Map<String, dynamic> json) => GetAProductDetails(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        userId: json["user_id"],
+        categoryId: json["category_id"],
+        contact: json["contact"],
+        imgName: json["imgName"],
+        amount: json["amount"],
+        timestamp1: json["timestamp-1"],
+        timestamp2: json["timestamp-2"],
+        timestamp3: json["timestamp-3"],
+        timestamp4: json["timestamp-4"],
+        price1: json["price-1"],
+        price2: json["price-2"],
+        price3: json["price-3"],
+        price4: json["price-4"],
+        views: json["views"],
+        isOwner: json["isOwner"],
+        isLiked: json["isLiked"],
+        likesCount: json["likesCount"],
+        comments: List<dynamic>.from(json["comments"].map((x) => x)),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "user_id": userId,
+        "category_id": categoryId,
+        "contact": contact,
+        "imgName": imgName,
+        "amount": amount,
+        "timestamp-1": timestamp1,
+        "timestamp-2": timestamp2,
+        "timestamp-3": timestamp3,
+        "timestamp-4": timestamp4,
+        "price-1": price1,
+        "price-2": price2,
+        "price-3": price3,
+        "price-4": price4,
+        "views": views,
+        "isOwner": isOwner,
+        "isLiked": isLiked,
+        "likesCount": likesCount,
+        "comments": List<dynamic>.from(comments.map((x) => x)),
+    };
+}
+
+
+//
+
+// To parse this JSON data, do
+//
+//     final signupResponse = signupResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+SignupResponse signupResponseFromJson(String str) => SignupResponse.fromJson(json.decode(str));
+
+String signupResponseToJson(SignupResponse data) => json.encode(data.toJson());
+
+class SignupResponse {
+    SignupResponse({
+        this.user,
+        this.token,
+    });
+
+    User user;
+    String token;
+
+    factory SignupResponse.fromJson(Map<String, dynamic> json) => SignupResponse(
+        user: User.fromJson(json["user"]),
+        token: json["token"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "user": user.toJson(),
+        "token": token,
+    };
+}
+
+class User {
+    User({
+        this.name,
+        this.email,
+        this.updatedAt,
+        this.createdAt,
+        this.id,
+    });
+
+    String name;
+    String email;
+    DateTime updatedAt;
+    DateTime createdAt;
+    int id;
+
+    factory User.fromJson(Map<String, dynamic> json) => User(
+        name: json["name"],
+        email: json["email"],
+        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        id: json["id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "email": email,
+        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt.toIso8601String(),
+        "id": id,
+    };
+}
+
+
+//
+
+// To parse this JSON data, do
+//
+//     final getAllCategories = getAllCategoriesFromJson(jsonString);
+
+import 'dart:convert';
+
+List<GetAllCategories> getAllCategoriesFromJson(String str) => List<GetAllCategories>.from(json.decode(str).map((x) => GetAllCategories.fromJson(x)));
+
+String getAllCategoriesToJson(List<GetAllCategories> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class GetAllCategories {
+    GetAllCategories({
+        this.id,
+        this.name,
+    });
+
+    int id;
+    String name;
+
+    factory GetAllCategories.fromJson(Map<String, dynamic> json) => GetAllCategories(
+        id: json["id"],
+        name: json["name"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+    };
+}
+
+
+//
+
+
+// To parse this JSON data, do
+//
+//     final createACategoryResponse = createACategoryResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+CreateACategoryResponse createACategoryResponseFromJson(String str) => CreateACategoryResponse.fromJson(json.decode(str));
+
+String createACategoryResponseToJson(CreateACategoryResponse data) => json.encode(data.toJson());
+
+class CreateACategoryResponse {
+    CreateACategoryResponse({
+        this.name,
+        this.id,
+    });
+
+    String name;
+    int id;
+
+    factory CreateACategoryResponse.fromJson(Map<String, dynamic> json) => CreateACategoryResponse(
+        name: json["name"],
+        id: json["id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "id": id,
+    };
+}
+
+
+//
+
+
+// To parse this JSON data, do
+//
+//     final updateAProduct = updateAProductFromJson(jsonString);
+
+import 'dart:convert';
+
+UpdateAProduct updateAProductFromJson(String str) => UpdateAProduct.fromJson(json.decode(str));
+
+String updateAProductToJson(UpdateAProduct data) => json.encode(data.toJson());
+
+class UpdateAProduct {
+    UpdateAProduct({
+        this.id,
+        this.name,
+        this.description,
+        this.userId,
+        this.categoryId,
+        this.contact,
+        this.imgName,
+        this.amount,
+        this.timestamp1,
+        this.timestamp2,
+        this.timestamp3,
+        this.timestamp4,
+        this.price1,
+        this.price2,
+        this.price3,
+        this.price4,
+        this.views,
+    });
+
+    int id;
+    String name;
+    String description;
+    String userId;
+    String categoryId;
+    String contact;
+    String imgName;
+    String amount;
+    String timestamp1;
+    String timestamp2;
+    String timestamp3;
+    String timestamp4;
+    String price1;
+    String price2;
+    String price3;
+    String price4;
+    String views;
+
+    factory UpdateAProduct.fromJson(Map<String, dynamic> json) => UpdateAProduct(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        userId: json["user_id"],
+        categoryId: json["category_id"],
+        contact: json["contact"],
+        imgName: json["imgName"],
+        amount: json["amount"],
+        timestamp1: json["timestamp-1"],
+        timestamp2: json["timestamp-2"],
+        timestamp3: json["timestamp-3"],
+        timestamp4: json["timestamp-4"],
+        price1: json["price-1"],
+        price2: json["price-2"],
+        price3: json["price-3"],
+        price4: json["price-4"],
+        views: json["views"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "user_id": userId,
+        "category_id": categoryId,
+        "contact": contact,
+        "imgName": imgName,
+        "amount": amount,
+        "timestamp-1": timestamp1,
+        "timestamp-2": timestamp2,
+        "timestamp-3": timestamp3,
+        "timestamp-4": timestamp4,
+        "price-1": price1,
+        "price-2": price2,
+        "price-3": price3,
+        "price-4": price4,
+        "views": views,
+    };
+}
+
+
+//
+
+
+// To parse this JSON data, do
+//
+//     final likeAProduct = likeAProductFromJson(jsonString);
+
+import 'dart:convert';
+
+LikeAProduct likeAProductFromJson(String str) => LikeAProduct.fromJson(json.decode(str));
+
+String likeAProductToJson(LikeAProduct data) => json.encode(data.toJson());
+
+class LikeAProduct {
+    LikeAProduct({
+        this.productsId,
+        this.userId,
+        this.updatedAt,
+        this.createdAt,
+        this.id,
+    });
+
+    String productsId;
+    int userId;
+    DateTime updatedAt;
+    DateTime createdAt;
+    int id;
+
+    factory LikeAProduct.fromJson(Map<String, dynamic> json) => LikeAProduct(
+        productsId: json["products_id"],
+        userId: json["user_id"],
+        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        id: json["id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "products_id": productsId,
+        "user_id": userId,
+        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt.toIso8601String(),
+        "id": id,
+    };
+}
+
+
+//
+
+
+// To parse this JSON data, do
+//
+//     final createACommentResponse = createACommentResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+CreateACommentResponse createACommentResponseFromJson(String str) => CreateACommentResponse.fromJson(json.decode(str));
+
+String createACommentResponseToJson(CreateACommentResponse data) => json.encode(data.toJson());
+
+class CreateACommentResponse {
+    CreateACommentResponse({
+        this.productsId,
+        this.comment,
+        this.userId,
+        this.commenter,
+        this.updatedAt,
+        this.createdAt,
+        this.id,
+    });
+
+    String productsId;
+    String comment;
+    int userId;
+    String commenter;
+    DateTime updatedAt;
+    DateTime createdAt;
+    int id;
+
+    factory CreateACommentResponse.fromJson(Map<String, dynamic> json) => CreateACommentResponse(
+        productsId: json["products_id"],
+        comment: json["comment"],
+        userId: json["user_id"],
+        commenter: json["commenter"],
+        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        id: json["id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "products_id": productsId,
+        "comment": comment,
+        "user_id": userId,
+        "commenter": commenter,
+        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt.toIso8601String(),
+        "id": id,
+    };
+}
+
+
+//
+
+
+// To parse this JSON data, do
+//
+//     final getProfile = getProfileFromJson(jsonString);
+
+import 'dart:convert';
+
+GetProfile getProfileFromJson(String str) => GetProfile.fromJson(json.decode(str));
+
+String getProfileToJson(GetProfile data) => json.encode(data.toJson());
+
+class GetProfile {
+    GetProfile({
+        this.id,
+        this.name,
+        this.email,
+        this.emailVerifiedAt,
+        this.createdAt,
+        this.updatedAt,
+        this.products,
+        this.comments,
+    });
+
+    int id;
+    String name;
+    String email;
+    dynamic emailVerifiedAt;
+    dynamic createdAt;
+    dynamic updatedAt;
+    List<Product> products;
+    List<Comment> comments;
+
+    factory GetProfile.fromJson(Map<String, dynamic> json) => GetProfile(
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+        emailVerifiedAt: json["email_verified_at"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+        products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
+        comments: List<Comment>.from(json["comments"].map((x) => Comment.fromJson(x))),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "email": email,
+        "email_verified_at": emailVerifiedAt,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
+    };
+}
+
+class Comment {
+    Comment({
+        this.id,
+        this.userId,
+        this.productsId,
+        this.comment,
+        this.commenter,
+        this.createdAt,
+        this.updatedAt,
+    });
+
+    int id;
+    String userId;
+    String productsId;
+    String comment;
+    String commenter;
+    DateTime createdAt;
+    DateTime updatedAt;
+
+    factory Comment.fromJson(Map<String, dynamic> json) => Comment(
+        id: json["id"],
+        userId: json["user_id"],
+        productsId: json["products_id"],
+        comment: json["comment"],
+        commenter: json["commenter"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "products_id": productsId,
+        "comment": comment,
+        "commenter": commenter,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+    };
+}
+
+class Product {
+    Product({
+        this.id,
+        this.name,
+        this.description,
+        this.userId,
+        this.categoryId,
+        this.contact,
+        this.imgName,
+        this.amount,
+        this.timestamp1,
+        this.timestamp2,
+        this.timestamp3,
+        this.timestamp4,
+        this.price1,
+        this.price2,
+        this.price3,
+        this.price4,
+        this.views,
+    });
+
+    int id;
+    String name;
+    String description;
+    String userId;
+    String categoryId;
+    String contact;
+    String imgName;
+    String amount;
+    String timestamp1;
+    String timestamp2;
+    String timestamp3;
+    String timestamp4;
+    String price1;
+    String price2;
+    String price3;
+    String price4;
+    String views;
+
+    factory Product.fromJson(Map<String, dynamic> json) => Product(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        userId: json["user_id"],
+        categoryId: json["category_id"],
+        contact: json["contact"],
+        imgName: json["imgName"],
+        amount: json["amount"],
+        timestamp1: json["timestamp-1"],
+        timestamp2: json["timestamp-2"],
+        timestamp3: json["timestamp-3"],
+        timestamp4: json["timestamp-4"],
+        price1: json["price-1"],
+        price2: json["price-2"],
+        price3: json["price-3"],
+        price4: json["price-4"],
+        views: json["views"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "user_id": userId,
+        "category_id": categoryId,
+        "contact": contact,
+        "imgName": imgName,
+        "amount": amount,
+        "timestamp-1": timestamp1,
+        "timestamp-2": timestamp2,
+        "timestamp-3": timestamp3,
+        "timestamp-4": timestamp4,
+        "price-1": price1,
+        "price-2": price2,
+        "price-3": price3,
+        "price-4": price4,
+        "views": views,
+    };
+}
+
