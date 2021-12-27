@@ -15,11 +15,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Category::insert([[
-            'name' => 'food'
-        ], [
-            'name' => 'drinks'
-        ]]);
+        Category::insert([
+            ['name' => 'Fruit'],
+            ['name' => 'Veggies'],
+            ['name' => 'Meat'],
+            ['name' => 'Candy'],
+            ['name' => 'Sauce'],
+            ['name' => 'Beverages'],
+            ['name' => 'Drugs'],
+            ['name' => 'Makeups']
+        ]);
         User::insert([[
             'name' => 'admin',
             'email' => 'admin@admin.com',
