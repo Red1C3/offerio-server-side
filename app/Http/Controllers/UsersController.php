@@ -79,4 +79,21 @@ class UsersController extends Controller
         $user['comments'] = $user->comments;
         return $user;
     }
+    public function updatePicture(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg'
+        ]);
+        $user = auth()->user();
+        $userEntry = User::find($user['id']);
+        if (isset($userEntry['image'])) {
+            $imgPath = storage_path() . '/app/images/' . $userEntry['image'];
+            unlink($imgPath);
+        }
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->storeAs('images', $imageName);
+        $userEntry->update(['image' => $imageName]);
+        $userEntry->save();
+        return response($userEntry, 200);
+    }
 }
