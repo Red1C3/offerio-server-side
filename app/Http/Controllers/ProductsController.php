@@ -15,12 +15,27 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = Products::all();
+        $sortBy = $request->input('sortBy');
+        if (
+            $sortBy &&
+            ($sortBy == 'name' || $sortBy == 'amount' ||
+                $sortBy == 'views'
+            )
+        ) {
+            if ($sortBy == 'amount' || $sortBy == 'views')
+                $products = $products->sortBy($sortBy, SORT_REGULAR, true);
+            else
+                $products = $products->sortBy($sortBy);
+        }
         foreach ($products as $key => $value) {
             $value['likesCount'] = count($value->likes);
             $this->stripItemDeep($value);
+        }
+        if ($sortBy && ($sortBy == 'price' || $sortBy == 'likesCount')) {
+            $products = $products->sortBy($sortBy, SORT_REGULAR, true);
         }
         return $products;
     }
@@ -217,8 +232,24 @@ class ProductsController extends Controller
                 'num' => 0,
                 'items' => null
             ]);
+        $sortBy = $request->input('sortBy');
+        if (
+            $sortBy &&
+            ($sortBy == 'name' || $sortBy == 'amount' ||
+                $sortBy == 'views'
+            )
+        ) {
+            if ($sortBy == 'amount' || $sortBy == 'views')
+                $items = $items->sortBy($sortBy, SORT_REGULAR, true);
+            else
+                $items = $items->sortBy($sortBy);
+        }
         foreach ($items as $key => $value) {
+            $value['likesCount'] = count($value->likes);
             $this->stripItemDeep($value);
+        }
+        if ($sortBy && ($sortBy == 'price' || $sortBy == 'likesCount')) {
+            $items = $items->sortBy($sortBy, SORT_REGULAR, true);
         }
         return response()->json([
             'msg' => 'Items were found',
@@ -254,7 +285,6 @@ class ProductsController extends Controller
         unset($item['timestamp-2']);
         unset($item['timestamp-3']);
         unset($item['timestamp-4']);
-        unset($item['views']);
         unset($item['likes']);
     }
 }
